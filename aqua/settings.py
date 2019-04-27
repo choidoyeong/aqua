@@ -21,7 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-o)im2-#l9$&j=ri=vgzcpa=h!8m#+4u54t8!^vfro1uhs!j87'
+SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -79,17 +79,6 @@ WSGI_APPLICATION = 'aqua.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'HOST' : 'aquadbinstance.ckqg6wcnislp.us-east-1.rds.amazonaws.com',
-#         'PORT' : '5432',
-#         'NAME' : 'aquadb',
-#         'USER' : 'doyeong',
-#         'PASSWORD' : 'yhj13098'
-#     }
-# }
-
 if os.getenv('GAE_APPLICATION', None):
     # Running on production App Engine, so connect to Google Cloud SQL using
     # the unix socket at /cloudsql/<your-cloudsql-connection string>
@@ -97,8 +86,8 @@ if os.getenv('GAE_APPLICATION', None):
         'default': {
             'ENGINE': 'django.db.backends.mysql',
             'HOST': '/cloudsql/aqua-238500:us-central1:aqua-instance',
-            'USER': 'doyeong',
-            'PASSWORD': 'yhj13098',
+            'USER': os.environ['USER'],
+            'PASSWORD': os.environ['PASSWORD'],
             'NAME': 'aqua',
         }
     }
@@ -115,8 +104,8 @@ else:
             'HOST': '127.0.0.1',
             'PORT': '3306',
             'NAME': 'aqua',
-            'USER': 'doyeong',
-            'PASSWORD': 'yhj13098',
+            'USER': os.environ['USER'],
+            'PASSWORD': os.environ['PASSWORD'],
         }
     }
 
