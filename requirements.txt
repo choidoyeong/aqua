@@ -3,6 +3,7 @@ chardet==3.0.4
 Click==7.0
 coreschema==0.0.4
 Django==2.2
+django-cors-headers==2.5.2
 djangorestframework==3.9.2
 djangorestframework-simplejwt==4.2.0
 idna==2.8
