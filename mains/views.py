@@ -33,7 +33,7 @@ class UserDetail(APIView):
         user = self.get_object(username)
         if user.check_password(request.data['password']):
             refresh = RefreshToken.for_user(user)
-            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'username': user.username}, status=status.HTTP_200_OK)
+            return Response({'refresh': str(refresh), 'access': str(refresh.access_token), 'username': user.username, 'nickname': user.first_name }, status=status.HTTP_200_OK)
         return Response(status = status.HTTP_400_BAD_REQUEST)
     
     def patch(self, request, username):
