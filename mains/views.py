@@ -15,6 +15,7 @@ from datetime import datetime
 from django.http import Http404
 
 class UserList(APIView):
+    serializer_class = UserSerializer
     def post(self, request):
         serializer = UserSerializer(data = request.data)
         if serializer.is_valid():
@@ -65,16 +66,18 @@ class UserNick(APIView):
         try:
             user = User.objects.get(pk = pk)
         except User.DoesNotExist:
-            return Response({'first_name': '이름 없음'}, status = status.HTTP_404_NOT_FOUND)
-        return Response({'first_name': user.first_name}, status = status.HTTP_200_OK)
+            return Response({'nickname': '알수없음'}, status = status.HTTP_404_NOT_FOUND)
+        return Response({'nickname': user.first_name}, status = status.HTTP_200_OK)
 
 class TipViewSet(viewsets.ViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, )
 
     def list(self, request):
         queryset = Tip.objects.all()
-        serializer = TipSerializer(queryset, many=True)
-        return Response(serializer.data)
+        l = []
+        for n in range(0, len(queryset)):
+            l.append({ 'id': queryset[n].id, 'user': queryset[n].user.first_name, 'content': queryset[n].content, 'date': queryset[n].date})
+        return Response(l)
 
     def create(self, request):
         token = request.META['HTTP_AUTHORIZATION'].split()

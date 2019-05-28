@@ -105,7 +105,7 @@ else:
             'PORT': '3306',
             'NAME': 'aqua',
             'USER': os.environ['USER'],
-            'PASSWORD': os.environ['PASSWORD'],
+            'PASSWORD': os.environ['localpassword'],
         }
     }
 

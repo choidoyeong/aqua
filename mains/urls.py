@@ -17,6 +17,6 @@ urlpatterns += [
     path('waters/today/', views.WaterDetail.as_view()),
     path('users/', views.UserList.as_view()),
     path('users/<str:username>/', views.UserDetail.as_view()),
-    path('users/nickname/<int:pk>/', views.UserNick.as_view()),
+    path('users/<int:pk>/nickname/', views.UserNick.as_view()),
     path('profiles/<str:username>/', views.ProfileDetail.as_view())
 ]
