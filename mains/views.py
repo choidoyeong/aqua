@@ -123,7 +123,7 @@ class WaterDetail(APIView):
             return Water.objects.get(date = date, user=user)
         except Water.DoesNotExist:
             userobject = User.objects.get(pk = user)
-            return Water.objects.create(user=userobject, titration_liters = int(userobject.profile.weight)*0.033)
+            return Water.objects.create(user=userobject, titration_liters = int(userobject.profile.weight)*33)
         except Water.MultipleObjectsReturned:
             return Water.objects.filter(user = user).order_by('id').first()
         
