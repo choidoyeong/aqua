@@ -138,7 +138,10 @@ class WaterDetail(APIView):
         token = request.META['HTTP_AUTHORIZATION'].split()
         token = jwt.decode(token[1], verify=False)
         water = self.get_object(token['user_id'])
-        serializer = WaterSerializer(water, data = request.data, partial=True)
+        data = { 'liters' : request.data['liters']}
+        if water.titration_liters <= int(request.data['liters']):
+            data['success'] = True
+        serializer = WaterSerializer(water, data = data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
