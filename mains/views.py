@@ -103,14 +103,17 @@ class WaterList(APIView):
     def get(self, request, year, month):
         token = request.META['HTTP_AUTHORIZATION'].split()
         token = jwt.decode(token[1], verify=False)
-        try:
-            date = year+'-'+month+'-'
-            waters = Water.objects.all()
-            waters = waters.filter(user_id = token['user_id'], date__iregex = date+r'[0-9][0-9]')
-        except Water.DoesNotExist:
-            return Response(status=status.HTTP_404_NOT_FOUND)
-        serializers = WaterSerializer(waters, many=True)
-        return Response(serializers.data)
+        date = year+'-'+month+'-'
+        waters = Water.objects.filter(user_id = token['user_id'], date__iregex = date+r'[0-9][0-9]')
+        waters_data = []
+        for n in range(0, len(waters)):
+            waters_data.append({
+                'date' : waters[n].date.day,
+                'liters' : waters[n].liters,
+                'titration_liters' : waters[n].titration_liters,
+                'success' : waters[n].success 
+            })
+        return Response(waters_data)
     
 
 class WaterDetail(APIView):
